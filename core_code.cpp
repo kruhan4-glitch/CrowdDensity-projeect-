@@ -7,13 +7,12 @@ using namespace std;
 
 class Guest
 {
-private:
+public:
     int ID;
     string name;
     bool entered;
     bool inside;
 
-public:
     Guest(){
         ID = 0;
         name = "";
@@ -30,11 +29,27 @@ public:
 };
 
 Guest guest[MAX];
+bool registered[MAX] = {false};
 int guestCount = 0;
 int nextTicketId = 1001;
 
 void registerGuest(){
     
+    for(int i = 0; i < MAX; i++){
+        if(registered[i] == false){
+            cout << "ID: " << nextTicketId << endl;
+            string n;
+            cout << "Enter Name: ";
+            cin >> n;
+            guest[i].ID = nextTicketId;
+            nextTicketId++;
+            guest[i].name = n;
+            return;
+        }
+    }
+    cout << "=====================" << endl;
+    cout << "No Available Tickets!" << endl;
+    cout << "=====================" << endl;
 }
 
 int main(){
@@ -70,34 +85,35 @@ int main(){
         switch(choose){
 
             case 1:
-            break;
+                registerGuest();
+                break;
 
             case 2:
-            break;
+                break;
 
             case 3:
-            break;
+                break;
 
             case 4:
-            break;
+                break;
 
             case 5:
-            break;
+                break;
 
             case 6:
-            break;
+                break;
 
             case 7:
-            break;
+                break;
 
             case 8:
-            break;
+                break;
 
             case 9:
                 cout << "==============" << endl;
                 cout << "Sysyem Closed." << endl;
                 cout << "==============" << endl;
-            break;
+                break;
 
             default:
                 cout << "======================================" << endl;
