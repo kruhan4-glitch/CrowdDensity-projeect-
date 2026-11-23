@@ -1,0 +1,111 @@
+#include<iostream>
+#include<string>
+
+#define MAX 100
+
+using namespace std;
+
+class Guest
+{
+private:
+    int ID;
+    string name;
+    bool entered;
+    bool inside;
+
+public:
+    Guest(){
+        ID = 0;
+        name = "";
+        entered = false;
+        inside = false;
+    }
+
+    Guest(int id, string n){
+        ID = id;
+        name = n;
+        entered = false;
+        inside = false;
+    }
+};
+
+Guest guest[MAX];
+int guestCount = 0;
+int nextTicketId = 1001;
+
+void registerGuest(){
+    
+}
+
+int main(){
+
+    int choose = 0;
+    do{
+        cout << "--------------------------------------------" << endl;
+        cout << "   Crowd Density and Event Entry Manager.   " << endl;
+        cout << "--------------------------------------------" << endl;
+
+        cout << "1. Register Attendee." << endl;
+        cout << "2. Search Attendee." << endl;
+        cout << "3. Update Attendee." << endl;
+        cout << "4. Delete Attendee." << endl;
+        cout << "5. Manage Entry." << endl;
+        cout << "6. Manage Exit." << endl;
+        cout << "7. Display Attendes." << endl;
+        cout << "8. Sort Attendees." << endl;
+        cout << "9. EXIT." << endl;
+
+        if(!(cin >> choose)){
+
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            choose = 0;
+            cout << "=====================" << endl;
+            cout << "Invalid input Option.";
+            cout << "=====================" << endl;
+            continue;
+        }
+
+        switch(choose){
+
+            case 1:
+            break;
+
+            case 2:
+            break;
+
+            case 3:
+            break;
+
+            case 4:
+            break;
+
+            case 5:
+            break;
+
+            case 6:
+            break;
+
+            case 7:
+            break;
+
+            case 8:
+            break;
+
+            case 9:
+                cout << "==============" << endl;
+                cout << "Sysyem Closed." << endl;
+                cout << "==============" << endl;
+            break;
+
+            default:
+                cout << "======================================" << endl;
+                cout << "INVALID! Please choose between 1 to 9." << endl;
+                cout << "======================================" << endl;
+                break;
+        }
+    }while(choose != 9);
+
+
+}
