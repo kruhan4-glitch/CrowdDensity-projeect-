@@ -32,18 +32,26 @@ Guest guest[MAX];
 bool registered[MAX] = {false};
 int guestCount = 0;
 int nextTicketId = 1001;
+int ticketCount = 0;
 
 void registerGuest(){
     
     for(int i = 0; i < MAX; i++){
         if(registered[i] == false){
-            cout << "ID: " << nextTicketId << endl;
+            cout << "--------------------------" << endl;
+            cout << "Ticket ID: " << nextTicketId << endl;
             string n;
             cout << "Enter Name: ";
             cin >> n;
+            cout << "--------------------------" << endl;
             guest[i].ID = nextTicketId;
-            nextTicketId++;
             guest[i].name = n;
+            nextTicketId++;
+            ticketCount++;
+            registered[i] = true;
+            cout << "==========================" << endl;
+            cout << "Registration Successfull!." << endl;
+            cout << "==========================" << endl;
             return;
         }
     }
