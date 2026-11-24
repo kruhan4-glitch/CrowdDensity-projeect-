@@ -36,28 +36,39 @@ int ticketCount = 0;
 
 void registerGuest(){
     
+    if(ticketCount >= 100){
+
+        cout << "=====================" << endl;
+        cout << "No Available Tickets!" << endl;
+        cout << "=====================" << endl;
+
+        return;
+    }
+
     for(int i = 0; i < MAX; i++){
+        
         if(registered[i] == false){
+            
             cout << "--------------------------" << endl;
             cout << "Ticket ID: " << nextTicketId << endl;
             string n;
             cout << "Enter Name: ";
             cin >> n;
             cout << "--------------------------" << endl;
+
             guest[i].ID = nextTicketId;
             guest[i].name = n;
             nextTicketId++;
             ticketCount++;
             registered[i] = true;
+
             cout << "==========================" << endl;
             cout << "Registration Successfull!." << endl;
             cout << "==========================" << endl;
+
             return;
         }
     }
-    cout << "=====================" << endl;
-    cout << "No Available Tickets!" << endl;
-    cout << "=====================" << endl;
 }
 
 int main(){
