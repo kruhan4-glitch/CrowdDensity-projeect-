@@ -71,6 +71,76 @@ void registerGuest(){
     }
 }
 
+void displayGuestDetail(int i){
+
+    cout << "=====================" << endl;
+    cout << "Guest ID: " << guest[i].ID << endl;
+    cout << "Name: " << guest[i].name << endl;
+    if(guest[i].entered) cout << "Entered." << endl;
+    else cout << "Not Entered." << endl;
+    if(guest[i].inside) cout << "Inside the Event." << endl;
+    else cout << "Not inside the Event." << endl;
+    cout << "=====================" << endl;
+}
+
+void searchGuest(){
+
+    int choose;
+    cout << "---------------------" << endl;
+    cout << "Search by- " << endl;
+    cout << "1. ID." << endl;
+    cout << "2. Name." << endl;
+    cin >> choose;
+
+    if(choose == 1){
+
+        int id;
+        cout << "Enter Guest ID: ";
+        cin >> id;
+        cout << "---------------------" << endl;
+
+        for(int i = 0; i < MAX; i++){
+
+            if(guest[i].ID == id){
+                displayGuestDetail(i);
+                return;
+            }
+        }
+
+        cout << "===============" << endl;
+        cout << "Not Registered!" << endl;
+        cout << "===============" << endl;
+        return;
+    }
+    else if(choose == 2){
+
+        string n;
+        cout << "Enter guest Name: ";
+        cin >> n;
+        cout << "---------------------" << endl;
+
+        for(int i = 0; i < MAX; i++){
+
+            if(guest[i].name == n){
+                displayGuestDetail(i);
+                return;
+            }
+        }
+
+        cout << "===============" << endl;
+        cout << "Not Registered!" << endl;
+        cout << "===============" << endl;
+        return;
+    }
+    else{
+        cout << "---------------------" << endl;
+        cout << "Please choose 1 or 2." << endl;
+        cout << "---------------------" << endl;
+
+        searchGuest();
+    }
+}
+
 int main(){
 
     int choose = 0;
@@ -108,6 +178,7 @@ int main(){
                 break;
 
             case 2:
+                searchGuest();
                 break;
 
             case 3:
