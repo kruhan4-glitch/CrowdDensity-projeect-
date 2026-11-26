@@ -225,6 +225,7 @@ void manageEntry(){
 
         guest[i].entered = true;
         guest[i].inside = true;
+        guestCount++;
 
         cout << "=================" << endl;
         cout << "Entry successful." << endl;
@@ -236,6 +237,44 @@ void manageEntry(){
     cout << "=============================" << endl;
     cout << "The guest is already Entered!" << endl;
     cout << "=============================" << endl;
+}
+
+void manageExit(){
+
+    int exit;
+    cout << "-------------------" << endl;
+    cout << "Which type of exit?" << endl;
+    cout << "1. Leave." << endl;
+    cout << "2. Temporary exit." << endl;
+    cin >> exit;
+    cout << "-------------------" << endl;
+
+    if(exit == 1){
+        deleteGuest();
+        return;
+    }
+    else if(exit == 2){
+
+        int i = searchGuest();
+        displayGuestDetail(i);
+
+        if(i == -1) return;
+
+        guest[i].inside = false;
+        cout << "========" << endl;
+        cout << "Outside." << endl;
+        cout << "========" << endl;
+
+        return;
+    }
+    else{
+
+        cout << "---------------------" << endl;
+        cout << "Please choose 1 or 2." << endl;
+        cout << "---------------------" << endl;
+
+        manageExit();
+    }
 }
 
 int main(){
@@ -291,6 +330,7 @@ int main(){
                 break;
 
             case 6:
+                manageExit();
                 break;
 
             case 7:
