@@ -215,6 +215,29 @@ void deleteGuest(){
     }
 }
 
+void manageEntry(){
+
+    int i = searchGuest();
+    displayGuestDetail(i);
+    if(i == -1) return;
+
+    if(!guest[i].entered || !guest[i].inside){
+
+        guest[i].entered = true;
+        guest[i].inside = true;
+
+        cout << "=================" << endl;
+        cout << "Entry successful." << endl;
+        cout << "=================" << endl;
+        
+        return;
+    }
+    
+    cout << "=============================" << endl;
+    cout << "The guest is already Entered!" << endl;
+    cout << "=============================" << endl;
+}
+
 int main(){
 
     int choose = 0;
@@ -264,6 +287,7 @@ int main(){
                 break;
 
             case 5:
+                manageEntry();
                 break;
 
             case 6:
