@@ -73,17 +73,29 @@ void registerGuest(){
 
 void displayGuestDetail(int i){
 
-    cout << "=====================" << endl;
-    cout << "Guest ID: " << guest[i].ID << endl;
-    cout << "Name: " << guest[i].name << endl;
-    if(guest[i].entered) cout << "Entered." << endl;
-    else cout << "Not Entered." << endl;
-    if(guest[i].inside) cout << "Inside the Event." << endl;
-    else cout << "Not inside the Event." << endl;
-    cout << "=====================" << endl;
+    if(i == -1){
+
+        cout << "===============" << endl;
+        cout << "Not Registered!" << endl;
+        cout << "===============" << endl;
+
+        return;
+    }
+    else{
+        cout << "=====================" << endl;
+        cout << "Guest ID: " << guest[i].ID << endl;
+        cout << "Name: " << guest[i].name << endl;
+        if(guest[i].entered) cout << "Entered." << endl;
+        else cout << "Not Entered." << endl;
+        if(guest[i].inside) cout << "Inside the Event." << endl;
+        else cout << "Not inside the Event." << endl;
+        cout << "=====================" << endl;
+
+        return;
+    }
 }
 
-void searchGuest(){
+int searchGuest(){
 
     int choose;
     cout << "---------------------" << endl;
@@ -101,16 +113,8 @@ void searchGuest(){
 
         for(int i = 0; i < MAX; i++){
 
-            if(guest[i].ID == id){
-                displayGuestDetail(i);
-                return;
-            }
+            if(guest[i].ID == id) return i;
         }
-
-        cout << "===============" << endl;
-        cout << "Not Registered!" << endl;
-        cout << "===============" << endl;
-        return;
     }
     else if(choose == 2){
 
@@ -121,16 +125,8 @@ void searchGuest(){
 
         for(int i = 0; i < MAX; i++){
 
-            if(guest[i].name == n){
-                displayGuestDetail(i);
-                return;
-            }
+            if(guest[i].name == n) return i;
         }
-
-        cout << "===============" << endl;
-        cout << "Not Registered!" << endl;
-        cout << "===============" << endl;
-        return;
     }
     else{
         cout << "---------------------" << endl;
@@ -139,6 +135,34 @@ void searchGuest(){
 
         searchGuest();
     }
+
+    return -1;
+}
+
+void searchGuest2(){
+
+    int i = searchGuest();
+    displayGuestDetail(i);
+}
+
+void updateGuest(){
+
+    int i = searchGuest();
+    displayGuestDetail(i);
+
+    string n;
+    cout << "--------------------------------------------------" << endl;
+    cout << "Enter the name that you want to change into: ";
+    cin >> n;
+    cout << "--------------------------------------------------" << endl;
+
+    guest[i].name = n;
+
+    cout << "===================================" << endl;
+    cout << "Name has been changed successfully." << endl;
+    cout << "===================================" << endl;
+
+    displayGuestDetail(i);
 }
 
 int main(){
@@ -178,10 +202,11 @@ int main(){
                 break;
 
             case 2:
-                searchGuest();
+                searchGuest2();
                 break;
 
             case 3:
+                updateGuest();
                 break;
 
             case 4:
