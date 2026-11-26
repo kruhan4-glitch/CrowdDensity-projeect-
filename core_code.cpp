@@ -150,6 +150,8 @@ void updateGuest(){
     int i = searchGuest();
     displayGuestDetail(i);
 
+    if(i == -1) return;
+
     string n;
     cout << "--------------------------------------------------" << endl;
     cout << "Enter the name that you want to change into: ";
@@ -163,6 +165,54 @@ void updateGuest(){
     cout << "===================================" << endl;
 
     displayGuestDetail(i);
+}
+
+void deleteGuest(){
+
+    int i = searchGuest();
+    displayGuestDetail(i);
+
+    if(i == -1) return;
+
+    int d;
+    cout << "-------------------" << endl;
+    cout << "Confirm to delete: " << endl;
+    cout << "1. Delete." << endl;
+    cout << "2. Cancel." << endl;
+    cin >> d;
+    cout << "-------------------" << endl;
+
+    if(d == 1){
+
+        guest[i].ID = 0;
+        guest[i].name = "";
+        guest[i].entered = false;
+        guest[i].inside = false;
+
+        registered[i] = false;
+        guestCount--;
+        ticketCount--;
+
+        cout << "==============" << endl;
+        cout << "Guest removed." << endl;
+        cout << "==============" << endl;
+    }
+    else if(d == 2){
+
+        cout << "=========" << endl;
+        cout << "Canceled." << endl;
+        cout << "=========" << endl;
+
+        return;
+    }
+    else{
+
+        cout << "---------------------" << endl;
+        cout << "Please choose 1 or 2." << endl;
+        cout << "---------------------" << endl;
+
+        deleteGuest();
+    }
 }
 
 int main(){
@@ -210,6 +260,7 @@ int main(){
                 break;
 
             case 4:
+                deleteGuest();
                 break;
 
             case 5:
