@@ -314,6 +314,14 @@ void manageExit(){
     }
 }
 
+void displayGuests(){
+
+    for(int i = 0; i < MAX; i++){
+
+        if(registered[i]) displayGuestDetail(i);
+    }
+}
+
 int main(){
 
     int choose = 0;
@@ -371,6 +379,7 @@ int main(){
                 break;
 
             case 7:
+                displayGuests();
                 break;
 
             case 8:
