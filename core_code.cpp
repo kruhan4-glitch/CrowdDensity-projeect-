@@ -1,8 +1,7 @@
 #include<iostream>
 #include<string>
-#include<sstream>
 
-#define MAX 100
+constexpr int MAX = 100;
 
 using namespace std;
 
@@ -38,7 +37,7 @@ int guestInside = 0;
 
 void registerGuest(){
     
-    if(ticketCount >= 100){
+    if(ticketCount >= MAX){
 
         cout << "=====================" << endl;
         cout << "No Available Tickets!" << endl;
@@ -65,7 +64,7 @@ void registerGuest(){
             registered[i] = true;
 
             cout << "==========================" << endl;
-            cout << "Registration Successfull!." << endl;
+            cout << "Registration Successful!." << endl;
             cout << "==========================" << endl;
 
             return;
@@ -100,45 +99,71 @@ void displayGuestDetail(int i){
 int searchGuest(){
 
     int choose;
-    cout << "---------------------" << endl;
-    cout << "Search by- " << endl;
-    cout << "1. ID." << endl;
-    cout << "2. Name." << endl;
-    cin >> choose;
 
-    if(choose == 1){
-
-        int id;
-        cout << "Enter Guest ID: ";
-        cin >> id;
+    while(true){
+        
         cout << "---------------------" << endl;
+        cout << "Search by- " << endl;
+        cout << "1. ID." << endl;
+        cout << "2. Name." << endl;
 
-        for(int i = 0; i < MAX; i++){
+        if(!(cin >> choose)){
 
-            if(registered[i] && guest[i].ID == id) return i;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            cout << "==============================" << endl;
+            cout << "Invalid input. Enter a number." << endl;
+            cout << "==============================" << endl;
+            continue;
+        }
+
+        if(choose == 1){
+
+            int id;
+            cout << "Enter Guest ID: ";
+
+            if(!(cin >> id)){
+
+                cin.clear();
+                cin.ignore(10000, '\n');
+
+                cout << "=================" << endl;
+                cout << "Invalid Guest ID." << endl;
+                cout << "=================" << endl;
+
+                return -1;
+            }
+
+            cout << "---------------------" << endl;
+
+            for(int i = 0; i < MAX; i++){
+
+                if(registered[i] && guest[i].ID == id) return i;
+            }
+
+            return -1;
+        }
+        else if(choose == 2){
+
+            string n;
+            cout << "Enter guest Name: ";
+            getline(cin >> ws, n);
+            cout << "---------------------" << endl;
+
+            for(int i = 0; i < MAX; i++){
+
+                if(registered[i] && guest[i].name == n) return i;
+            }
+
+            return -1;
+        }
+        else{
+            cout << "---------------------" << endl;
+            cout << "Please choose 1 or 2." << endl;
+            cout << "---------------------" << endl;
         }
     }
-    else if(choose == 2){
-
-        string n;
-        cout << "Enter guest Name: ";
-        getline(cin >> ws, n);
-        cout << "---------------------" << endl;
-
-        for(int i = 0; i < MAX; i++){
-
-            if(registered[i] && guest[i].name == n) return i;
-        }
-    }
-    else{
-        cout << "---------------------" << endl;
-        cout << "Please choose 1 or 2." << endl;
-        cout << "---------------------" << endl;
-
-        searchGuest();
-    }
-
-    return -1;
 }
 
 void searchGuest2(){
@@ -177,46 +202,63 @@ void deleteGuest(){
     if(i == -1) return;
 
     int d;
-    cout << "-------------------" << endl;
-    cout << "Confirm to delete: " << endl;
-    cout << "1. Delete." << endl;
-    cout << "2. Cancel." << endl;
-    cin >> d;
-    cout << "-------------------" << endl;
 
-    if(d == 1){
+    while(true){
 
-        if(guest[i].entered) guestCount--;
-        if(guest[i].inside) guestInside--;
-        ticketCount--;
+        cout << "-------------------" << endl;
+        cout << "Confirm to delete: " << endl;
+        cout << "1. Delete." << endl;
+        cout << "2. Cancel." << endl;
 
-        guest[i].ID = 0;
-        guest[i].name = "";
-        guest[i].entered = false;
-        guest[i].inside = false;
+        if(!(cin >> d)){
 
-        registered[i] = false;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            cout << "==============================" << endl;
+            cout << "Invalid input. Enter a number." << endl;
+            cout << "==============================" << endl;
+
+            continue;
+        }
+
+        cout << "-------------------" << endl;
+
+        if(d == 1){
+
+            if(guest[i].entered) guestCount--;
+            if(guest[i].inside) guestInside--;
+            ticketCount--;
+
+            guest[i].ID = 0;
+            guest[i].name = "";
+            guest[i].entered = false;
+            guest[i].inside = false;
+
+            registered[i] = false;
         
-        cout << "==============" << endl;
-        cout << "Guest removed." << endl;
-        cout << "==============" << endl;
+            cout << "==============" << endl;
+            cout << "Guest removed." << endl;
+            cout << "==============" << endl;
+
+            return;
+        }
+        else if(d == 2){
+
+            cout << "=========" << endl;
+            cout << "Canceled." << endl;
+            cout << "=========" << endl;
+
+            return;
+        }
+        else{
+
+            cout << "---------------------" << endl;
+            cout << "Please choose 1 or 2." << endl;
+            cout << "---------------------" << endl;
+        }
     }
-    else if(d == 2){
-
-        cout << "=========" << endl;
-        cout << "Canceled." << endl;
-        cout << "=========" << endl;
-
-        return;
-    }
-    else{
-
-        cout << "---------------------" << endl;
-        cout << "Please choose 1 or 2." << endl;
-        cout << "---------------------" << endl;
-
-        deleteGuest();
-    }
+    
 }
 
 void manageEntry(){
@@ -227,12 +269,33 @@ void manageEntry(){
 
     if(!guest[i].entered || !guest[i].inside){
 
-        cout << "--------------" << endl;
-        cout << "Confirm Entry-" << endl;
-        cout << "1. Confirm." << endl;
-        cout << "2. Cancel." << endl;
         int c;
-        cin >> c;
+        while(true){
+
+            cout << "--------------" << endl;
+            cout << "Confirm Entry-" << endl;
+            cout << "1. Confirm." << endl;
+            cout << "2. Cancel." << endl;
+            
+            if(!(cin >> c)){
+
+                cin.clear();
+                cin.ignore(10000, '\n');
+
+                cout << "==============================" << endl;
+                cout << "Invalid input. Enter a number." << endl;
+                cout << "==============================" << endl;
+
+                continue;
+            }
+
+            if(c == 1 || c == 2) break;
+
+            cout << "=====================" << endl;
+            cout << "Please choose 1 or 2." << endl;
+            cout << "=====================" << endl;
+        }
+        
         cout << "--------------" << endl;
 
         if(c == 1){
@@ -249,8 +312,6 @@ void manageEntry(){
                 guestInside++;
             }
             
-            
-
             cout << "=================" << endl;
             cout << "Entry successful." << endl;
             cout << "=================" << endl;
@@ -274,11 +335,34 @@ void manageEntry(){
 void manageExit(){
 
     int exit;
-    cout << "-------------------" << endl;
-    cout << "Which type of exit?" << endl;
-    cout << "1. Leave." << endl;
-    cout << "2. Temporary exit." << endl;
-    cin >> exit;
+    while(true){
+
+        cout << "-------------------" << endl;
+        cout << "Which type of exit?" << endl;
+        cout << "1. Leave." << endl;
+        cout << "2. Temporary exit." << endl;
+
+        if(!(cin >> exit)){
+
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            cout << "==============================" << endl;
+            cout << "Invalid input. Enter a number." << endl;
+            cout << "==============================" << endl;
+
+            continue;
+        }
+
+        if(exit == 1 || exit == 2) break;
+        else{
+
+            cout << "---------------------" << endl;
+            cout << "Please choose 1 or 2." << endl;
+            cout << "---------------------" << endl;
+        }
+    }
+
     cout << "-------------------" << endl;
 
     if(exit == 1){
@@ -297,16 +381,35 @@ void manageExit(){
             cout << "========================================" << endl;
             cout << "Guest is not currently inside the event." << endl;
             cout << "========================================" << endl;
-
             return;
         }
 
         int c;
-        cout << "-------------" <<endl;
-        cout << "Confirm Exit-" << endl;
-        cout << "1. Confirm." << endl;
-        cout << "2. Cancel." << endl;
-        cin >> c;
+        while(true){
+            cout << "-------------" <<endl;
+            cout << "Confirm Exit-" << endl;
+            cout << "1. Confirm." << endl;
+            cout << "2. Cancel." << endl;
+        
+            if(!(cin >> c)){
+
+                cin.clear();
+                cin.ignore(10000, '\n');
+
+                cout << "==============================" << endl;
+                cout << "Invalid input. Enter a number." << endl;
+                cout << "==============================" << endl;
+
+                continue;
+            }
+
+            if(c == 1 || c == 2) break;
+
+            cout << "=====================" << endl;
+            cout << "Please choose 1 or 2." << endl;
+            cout << "=====================" << endl;
+        }
+
         cout << "-------------" <<endl;
 
         if(c == 1){
@@ -327,14 +430,7 @@ void manageExit(){
             return;
         }
     }
-    else{
-
-        cout << "---------------------" << endl;
-        cout << "Please choose 1 or 2." << endl;
-        cout << "---------------------" << endl;
-
-        manageExit();
-    }
+    
 }
 
 void displayGuests(){
@@ -372,7 +468,7 @@ int main(){
         cout << "4. Delete Attendee." << endl;
         cout << "5. Manage Entry." << endl;
         cout << "6. Manage Exit." << endl;
-        cout << "7. Display Attendes." << endl;
+        cout << "7. Display Attendees." << endl;
         cout << "8. Display Stats." << endl;
         cout << "9. EXIT." << endl;
 
@@ -424,7 +520,7 @@ int main(){
 
             case 9:
                 cout << "==============" << endl;
-                cout << "Sysyem Closed." << endl;
+                cout << "System Closed." << endl;
                 cout << "==============" << endl;
                 break;
 
@@ -435,6 +531,4 @@ int main(){
                 break;
         }
     }while(choose != 9);
-
-
 }
