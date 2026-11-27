@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<sstream>
 
 #define MAX 100
 
@@ -54,7 +55,7 @@ void registerGuest(){
             cout << "Ticket ID: " << nextTicketId << endl;
             string n;
             cout << "Enter Name: ";
-            cin >> n;
+            getline(cin >> ws, n);
             cout << "--------------------------" << endl;
 
             guest[i].ID = nextTicketId;
@@ -114,19 +115,19 @@ int searchGuest(){
 
         for(int i = 0; i < MAX; i++){
 
-            if(guest[i].ID == id) return i;
+            if(registered[i] && guest[i].ID == id) return i;
         }
     }
     else if(choose == 2){
 
         string n;
         cout << "Enter guest Name: ";
-        cin >> n;
+        getline(cin >> ws, n);
         cout << "---------------------" << endl;
 
         for(int i = 0; i < MAX; i++){
 
-            if(guest[i].name == n) return i;
+            if(registered[i] && guest[i].name == n) return i;
         }
     }
     else{
@@ -156,7 +157,7 @@ void updateGuest(){
     string n;
     cout << "--------------------------------------------------" << endl;
     cout << "Enter the name that you want to change into: ";
-    cin >> n;
+    getline(cin >> ws, n);
     cout << "--------------------------------------------------" << endl;
 
     guest[i].name = n;
@@ -185,16 +186,17 @@ void deleteGuest(){
 
     if(d == 1){
 
+        if(guest[i].entered) guestCount--;
+        if(guest[i].inside) guestInside--;
+        ticketCount--;
+
         guest[i].ID = 0;
         guest[i].name = "";
         guest[i].entered = false;
         guest[i].inside = false;
 
         registered[i] = false;
-        guestCount--;
-        ticketCount--;
-        guestInside--;
-
+        
         cout << "==============" << endl;
         cout << "Guest removed." << endl;
         cout << "==============" << endl;
@@ -289,6 +291,15 @@ void manageExit(){
         displayGuestDetail(i);
 
         if(i == -1) return;
+
+        if(!guest[i].inside){
+
+            cout << "========================================" << endl;
+            cout << "Guest is not currently inside the event." << endl;
+            cout << "========================================" << endl;
+
+            return;
+        }
 
         int c;
         cout << "-------------" <<endl;
