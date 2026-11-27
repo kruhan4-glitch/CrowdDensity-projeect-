@@ -33,6 +33,7 @@ bool registered[MAX] = {false};
 int guestCount = 0;
 int nextTicketId = 1001;
 int ticketCount = 0;
+int guestInside = 0;
 
 void registerGuest(){
     
@@ -192,6 +193,7 @@ void deleteGuest(){
         registered[i] = false;
         guestCount--;
         ticketCount--;
+        guestInside--;
 
         cout << "==============" << endl;
         cout << "Guest removed." << endl;
@@ -233,9 +235,19 @@ void manageEntry(){
 
         if(c == 1){
 
-            guest[i].entered = true;
-            guest[i].inside = true;
-            guestCount++;
+            if(!guest[i].entered){
+
+                guest[i].entered = true;
+                guestCount++;
+            }
+            
+            if(!guest[i].inside){
+
+                guest[i].inside = true;
+                guestInside++;
+            }
+            
+            
 
             cout << "=================" << endl;
             cout << "Entry successful." << endl;
@@ -289,7 +301,7 @@ void manageExit(){
         if(c == 1){
 
             guest[i].inside = false;
-            guestCount--;
+            guestInside--;
             cout << "========" << endl;
             cout << "Outside." << endl;
             cout << "========" << endl;
@@ -322,6 +334,19 @@ void displayGuests(){
     }
 }
 
+void stats(){
+
+    cout << "==============================" << endl;
+    cout << "Total Space: " << MAX << endl;
+    cout << "Total Registered: " << ticketCount << endl;
+    cout << "Total Entered: " << guestCount << endl;
+    cout << "Available Registration: " << MAX - ticketCount << endl;
+    cout << "Guest Inside: " << guestInside << endl;
+    cout << "Guest Outside: " << guestCount - guestInside << endl;
+    cout << "==============================" << endl;
+
+}
+
 int main(){
 
     int choose = 0;
@@ -337,7 +362,7 @@ int main(){
         cout << "5. Manage Entry." << endl;
         cout << "6. Manage Exit." << endl;
         cout << "7. Display Attendes." << endl;
-        cout << "8. Sort Attendees." << endl;
+        cout << "8. Display Stats." << endl;
         cout << "9. EXIT." << endl;
 
         if(!(cin >> choose)){
@@ -383,6 +408,7 @@ int main(){
                 break;
 
             case 8:
+                stats();
                 break;
 
             case 9:
