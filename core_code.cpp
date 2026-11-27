@@ -55,6 +55,15 @@ void registerGuest(){
             string n;
             cout << "Enter Name: ";
             getline(cin >> ws, n);
+
+            if(n.empty()){
+                cout << "=====================" << endl;
+                cout << "Name cannot be empty." << endl;
+                cout << "=====================" << endl;
+
+                return;
+            }
+
             cout << "--------------------------" << endl;
 
             guest[i].ID = nextTicketId;
@@ -183,6 +192,16 @@ void updateGuest(){
     cout << "--------------------------------------------------" << endl;
     cout << "Enter the name that you want to change into: ";
     getline(cin >> ws, n);
+
+    if(n.empty()){
+
+        cout << "=====================" << endl;
+        cout << "Name cannot be empty." << endl;
+        cout << "=====================" << endl;
+
+        return;
+    }
+
     cout << "--------------------------------------------------" << endl;
 
     guest[i].name = n;
@@ -435,6 +454,15 @@ void manageExit(){
 
 void displayGuests(){
 
+    if(ticketCount == 0){
+
+        cout << "=============================" << endl;
+        cout << "No guests are Registered yet." << endl;
+        cout << "=============================" << endl;
+
+        return;
+    }
+    
     for(int i = 0; i < MAX; i++){
 
         if(registered[i]) displayGuestDetail(i);
