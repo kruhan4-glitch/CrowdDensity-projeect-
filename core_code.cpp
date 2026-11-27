@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<fstream>
 
 constexpr int MAX = 100;
 
@@ -34,6 +35,79 @@ int guestCount = 0;
 int nextTicketId = 1001;
 int ticketCount = 0;
 int guestInside = 0;
+
+
+void saveGuests(){
+
+    ofstream file("guests.txt");
+
+    if (!file){
+        cout << "===================" << endl;
+        cout << "Error opening file!" << endl;
+        cout << "===================" << endl;
+        return;
+    }
+
+    for (int i = 0; i < MAX; i++){
+        if (registered[i]){
+            file << guest[i].ID << endl;
+            file << guest[i].name << endl;
+            file << guest[i].entered << endl;
+            file << guest[i].inside << endl;
+        }
+    }
+
+    file.close();
+}
+
+
+void loadGuests(){
+
+    ifstream file("guests.txt");
+
+    if (!file) return;
+
+    int id;
+    string name;
+    bool entered;
+    bool inside;
+
+    while (file >> id){
+
+        file >> ws;
+        getline(file, name);
+
+        if (!(file >> entered >> inside)) break;
+
+        int index = -1;
+
+        for (int i = 0; i < MAX; i++){
+            if (!registered[i]){
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) break;
+
+        guest[index] = Guest(id, name);
+        guest[index].entered = entered;
+        guest[index].inside = inside;
+
+        registered[index] = true;
+
+        ticketCount++;
+
+        if (entered) guestCount++;
+
+        if (inside) guestInside++;
+
+        if (id >= nextTicketId) nextTicketId = id + 1;
+    }
+
+    file.close();
+}
+
 
 void registerGuest(){
     
@@ -75,6 +149,8 @@ void registerGuest(){
             cout << "==========================" << endl;
             cout << "Registration Successful!." << endl;
             cout << "==========================" << endl;
+
+            saveGuests();
 
             return;
         }
@@ -211,6 +287,8 @@ void updateGuest(){
     cout << "===================================" << endl;
 
     displayGuestDetail(i);
+
+    saveGuests();
 }
 
 void deleteGuest(){
@@ -259,6 +337,8 @@ void deleteGuest(){
             cout << "==============" << endl;
             cout << "Guest removed." << endl;
             cout << "==============" << endl;
+
+            saveGuests();
 
             return;
         }
@@ -334,6 +414,8 @@ void manageEntry(){
             cout << "=================" << endl;
             cout << "Entry successful." << endl;
             cout << "=================" << endl;
+
+            saveGuests();
         
             return;
         }
@@ -439,6 +521,8 @@ void manageExit(){
             cout << "Outside." << endl;
             cout << "========" << endl;
 
+            saveGuests();
+
             return;
         }
         else{
@@ -483,6 +567,8 @@ void stats(){
 }
 
 int main(){
+
+    loadGuests();
 
     int choose = 0;
     do{
