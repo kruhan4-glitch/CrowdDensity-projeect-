@@ -223,15 +223,33 @@ void manageEntry(){
 
     if(!guest[i].entered || !guest[i].inside){
 
-        guest[i].entered = true;
-        guest[i].inside = true;
-        guestCount++;
+        cout << "--------------" << endl;
+        cout << "Confirm Entry-" << endl;
+        cout << "1. Confirm." << endl;
+        cout << "2. Cancel." << endl;
+        int c;
+        cin >> c;
+        cout << "--------------" << endl;
 
-        cout << "=================" << endl;
-        cout << "Entry successful." << endl;
-        cout << "=================" << endl;
+        if(c == 1){
+
+            guest[i].entered = true;
+            guest[i].inside = true;
+            guestCount++;
+
+            cout << "=================" << endl;
+            cout << "Entry successful." << endl;
+            cout << "=================" << endl;
         
-        return;
+            return;
+        }
+        else{
+
+            cout << "---------------" << endl;
+            cout << "Entry Canceled." << endl;
+            cout << "---------------" << endl;
+            return;
+        }
     }
     
     cout << "=============================" << endl;
@@ -260,12 +278,31 @@ void manageExit(){
 
         if(i == -1) return;
 
-        guest[i].inside = false;
-        cout << "========" << endl;
-        cout << "Outside." << endl;
-        cout << "========" << endl;
+        int c;
+        cout << "-------------" <<endl;
+        cout << "Confirm Exit-" << endl;
+        cout << "1. Confirm." << endl;
+        cout << "2. Cancel." << endl;
+        cin >> c;
+        cout << "-------------" <<endl;
 
-        return;
+        if(c == 1){
+
+            guest[i].inside = false;
+            guestCount--;
+            cout << "========" << endl;
+            cout << "Outside." << endl;
+            cout << "========" << endl;
+
+            return;
+        }
+        else{
+
+            cout << "--------------" << endl;
+            cout << "Exit Canceled." << endl;
+            cout << "--------------" << endl;
+            return;
+        }
     }
     else{
 
