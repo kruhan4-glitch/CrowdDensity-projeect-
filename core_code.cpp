@@ -366,6 +366,15 @@ void manageEntry(){
     displayGuestDetail(i);
     if(i == -1) return;
 
+    if (guestInside >= MAX && !guest[i].inside){
+
+        cout << "============================" << endl;
+        cout << "Venue is full! Entry denied." << endl;
+        cout << "============================" << endl;
+
+        return;
+    }
+
     if(!guest[i].entered || !guest[i].inside){
 
         int c;
@@ -555,6 +564,8 @@ void displayGuests(){
 
 void stats(){
 
+    double crowdPercentage = (guestInside / MAX) * 100;
+
     cout << "==============================" << endl;
     cout << "Total Space: " << MAX << endl;
     cout << "Total Registered: " << ticketCount << endl;
@@ -562,6 +573,7 @@ void stats(){
     cout << "Available Registration: " << MAX - ticketCount << endl;
     cout << "Guest Inside: " << guestInside << endl;
     cout << "Guest Outside: " << guestCount - guestInside << endl;
+    cout << "Crowd: " << crowdPercentage << "%" << endl;
     cout << "==============================" << endl;
 
 }
